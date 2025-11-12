@@ -13,5 +13,5 @@ app.use(bodyParser.json());
 app.use("/", router);
 
 app.listen(port, () => {
-  console.log("Servidor rodando na porta: http://localhost/8080");
+  console.log("Servidor rodando na porta: http://localhost:8080");
 });

@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const PasswordToken = require("../models/PasswordToken");
 
 class UserController {
   async index(req, res) {
@@ -52,6 +53,68 @@ class UserController {
 
     res.status(200);
     res.json("OK!");
+  }
+
+  async edit(req, res) {
+    const { id, name, email, role } = req.body;
+
+    const result = await User.update(id, email, name, role);
+
+    if (result != undefined) {
+      if (result.status) {
+        res.json({ sucess: "Tudo OK!" });
+      } else {
+        res.status(406);
+        res.json({ error: result.error });
+      }
+    }
+  }
+
+  async remove(req, res) {
+    var id = req.params.id;
+
+    var result = await User.delete(id);
+
+    if (result != undefined) {
+      if (result.status) {
+        res.status(200);
+        res.json({ sucess: "Tudo OK!" });
+      } else {
+        res.status(406);
+        res.json({ error: result.error });
+      }
+    }
+  }
+
+  async recoverPassword(req, res) {
+    const email = req.body.email;
+
+    const result = await PasswordToken.create(email);
+
+    if (result.status) {
+      res.json({ sucess: `Token: ${result.token}` });
+    } else {
+      res.status(406);
+      res.json({ error: result.error });
+    }
+  }
+
+  async changePassword(req, res) {
+    const { token, password } = req.body;
+
+    const isTokenIsValid = await PasswordToken.validate(token);
+
+    if (isTokenIsValid.status) {
+      await User.changePassword(
+        password,
+        isTokenIsValid.token.user_id,
+        isTokenIsValid.token.token
+      );
+      res.json({ sucess: "Senha alterada!" });
+    } else {
+      res.status(406);
+      res.json({ error: "Token Inválido" });
+    }
   }
 }
 
