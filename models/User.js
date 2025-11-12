@@ -1,5 +1,6 @@
 const knex = require("../database/connection");
 const bcrypt = require("bcrypt");
+
 const PasswordToken = require("./PasswordToken");
 
 class User {
@@ -36,7 +37,7 @@ class User {
   async findByEmail(email) {
     try {
       const result = await knex
-        .select(["id", "name", "email", "role"])
+        .select(["id", "name", "email", "password", "role"])
         .where({ email: email })
         .table("users");
 

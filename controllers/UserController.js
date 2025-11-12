@@ -1,3 +1,8 @@
+require("dotenv").config();
+
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+
 const User = require("../models/User");
 const PasswordToken = require("../models/PasswordToken");
 
@@ -114,6 +119,30 @@ class UserController {
     } else {
       res.status(406);
       res.json({ error: "Token Inválido" });
+    }
+  }
+
+  async login(req, res) {
+    const { email, password } = req.body;
+
+    var user = await User.findByEmail(email);
+
+    if (user != undefined) {
+      const result = await bcrypt.compare(password, user.password);
+
+      if (result) {
+        const token = await jwt.sign(
+          { email: email, role: user.role },
+          process.env.SECRET_KEY
+        );
+        res.json({ status: true, token: token });
+      } else {
+        res.status(406);
+        res.json({ error: "Senha Inválida" });
+      }
+    } else {
+      res.status(400);
+      res.json({ error: "Usuário não encontrado." });
     }
   }
 }
