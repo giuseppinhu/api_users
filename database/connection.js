@@ -1,11 +1,13 @@
+require("dotenv").config();
+
 var knex = require("knex")({
   client: "mysql2",
   connection: {
-    host: "0rb36i.h.filess.io",
-    port: "61002",
-    user: "user_api_steeplaid",
-    password: "1fc2484121aac6776779fe36a098ba0dfb187273",
-    database: "user_api_steeplaid",
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
   },
 });
 
