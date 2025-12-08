@@ -28,17 +28,17 @@ class UserController {
     const { email, password, name } = req.body;
 
     // Validate if undefined
-    if (email === undefined) {
+    if (email === undefined || email === " " || email === "") {
       res.status(403);
       res.json({ error: "O e-mail é inválido!" });
       return;
     }
-    if (password === undefined) {
+    if (password === undefined || password === " " || password === "") {
       res.status(403);
       res.json({ error: "A senha é inválida!" });
       return;
     }
-    if (name === undefined) {
+    if (name === undefined || name === " " || password === "") {
       res.status(403);
       res.json({ error: "O campo nome é inválido!" });
       return;

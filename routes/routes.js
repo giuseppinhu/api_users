@@ -12,7 +12,7 @@ router.get("/users", AdminAuth, UserController.index);
 
 router.get("/user/:id", AdminAuth, UserController.findUser);
 
-router.post("/user", AdminAuth, UserController.create);
+router.post("/user", UserController.create);
 
 router.put("/user", AdminAuth, UserController.edit);
 
@@ -23,5 +23,7 @@ router.post("/recoverpassword", UserController.recoverPassword);
 router.post("/changepassword", UserController.changePassword);
 
 router.post("/login", UserController.login);
+
+router.post("/validate", AdminAuth, HomeController.validate);
 
 module.exports = router;

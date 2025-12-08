@@ -17,7 +17,7 @@ class PasswordToken {
           .table("passwordtoken");
         return { status: true, token };
       } catch (error) {
-        return { status: false, error: error };
+        return { status: false, error };
       }
     } else {
       return { status: false, error: "O email não está cadastrado!" };
