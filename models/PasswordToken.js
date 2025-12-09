@@ -1,9 +1,9 @@
 const knex = require("../database/connection");
-const User = require("../models/User");
+const UserModel = require("./User");
 
 class PasswordToken {
   async create(email) {
-    const user = await User.findByEmail(email);
+    const user = await UserModel.findByEmail(email);
 
     if (user != undefined) {
       try {
@@ -12,7 +12,7 @@ class PasswordToken {
           .insert({
             user_id: user.id,
             used: 0,
-            token: token,
+            token,
           })
           .table("passwordtoken");
         return { status: true, token };
