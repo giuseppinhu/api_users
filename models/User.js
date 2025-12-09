@@ -1,5 +1,6 @@
 const knex = require("../database/connection");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 class User {
   async findAll() {
@@ -25,6 +26,19 @@ class User {
         return result[0];
       } else {
         return undefined;
+      }
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
+  }
+
+  async findByToken(token) {
+    try {
+      const userDecoded = jwt.decode(token, process.env.JWT_SECRET);
+      if (userDecoded != {}) {
+        const result = await this.findById(userDecoded.id);
+        return result;
       }
     } catch (error) {
       console.log(error);
@@ -151,7 +165,7 @@ class User {
             .update({
               password: hash,
             })
-            .where({ id: id })
+            .where({ id })
             .table("users");
 
           await PasswordToken.setUsed(token);

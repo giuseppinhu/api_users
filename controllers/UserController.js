@@ -121,6 +121,18 @@ class UserController {
     }
   }
 
+  async findUserByToken(req, res) {
+    const { token } = req.body;
+
+    try {
+      const user = await User.findByToken(token);
+      res.json({ user });
+    } catch (error) {
+      res.status(403);
+      res.json({ error });
+    }
+  }
+
   async login(req, res) {
     const { email, password } = req.body;
 
@@ -131,7 +143,7 @@ class UserController {
 
       if (result) {
         const token = await jwt.sign(
-          { email: email, role: user.role },
+          { email: email, role: user.role, id: user.id },
           process.env.SECRET_KEY
         );
         res.json({ status: true, token: token });

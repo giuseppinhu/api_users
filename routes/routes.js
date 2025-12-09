@@ -1,5 +1,4 @@
 const express = require("express");
-const app = express();
 const router = express.Router();
 
 const HomeController = require("../controllers/HomeController");
@@ -25,5 +24,7 @@ router.post("/changepassword", UserController.changePassword);
 router.post("/login", UserController.login);
 
 router.post("/validate", AdminAuth, HomeController.validate);
+
+router.post("/userbytoken", UserController.findUserByToken);
 
 module.exports = router;
