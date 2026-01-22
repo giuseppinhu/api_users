@@ -7,7 +7,7 @@
 
 API RESTful completa para gerenciamento de usuários, com sistema de autenticação, criptografia de senhas e integração com banco de dados relacional.
 
-🔗 **Deploy disponível:** [Acesse a API aqui](https://api-users-bice.vercel.app)
+🔗 **Deploy disponível:** [Acesse a API aqui](https://api-users-smoky.vercel.app/)
 
 ---
 
